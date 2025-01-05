@@ -1,6 +1,6 @@
-require("tim.mappings")
-require("tim.options")
-require("tim.lazy")
+require("mappings")
+require("options")
+require("lazy")
 
 
 local augroup = vim.api.nvim_create_augroup
