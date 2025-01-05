@@ -95,7 +95,7 @@ with lib;
       buildPhase = ''
         mkdir -p $out/nvim
         mkdir -p $out/lua
-        rm init.lua
+        # rm init.lua
       '';
 
       installPhase = ''
