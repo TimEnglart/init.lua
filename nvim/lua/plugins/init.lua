@@ -14,4 +14,5 @@ return {
 
   'mbbill/undotree',
   --  'github/copilot.vim',
+  { "nvim-neotest/nvim-nio" }
 }

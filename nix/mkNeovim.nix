@@ -48,6 +48,8 @@ with lib;
       optional = false;
       runtime = {};
     };
+    
+    extendedPlugins = plugins ++ (with pkgs.vimPlugins; [lazy-nix-helper-nvim lazy-nvim nvim-dap nvim-dap-ui nvim-nio]);
 
     externalPackages = extraPackages ++ (optionals withSqlite [pkgs.sqlite]);
 
@@ -59,7 +61,7 @@ with lib;
         then x
         else {plugin = x;}
       ))
-    plugins;
+    extendedPlugins; 
 
     # This nixpkgs util function creates an attrset
     # that pkgs.wrapNeovimUnstable uses to configure the Neovim build.
@@ -82,6 +84,25 @@ with lib;
         in
           lib.all (regex: builtins.match regex relPath == null) ignoreConfigRegexes;
       };
+
+      lazy-nix-helper-nvim = pkgs.vimUtils.buildVimPlugin {
+    name = "lazy-nix-helper.nvim";
+    src = pkgs.fetchFromGitHub {
+      owner = "b-src";
+      repo = "lazy-nix-helper.nvim";
+      rev = "master";
+      hash = "sha256-HwrO32Sj1FUWfnOZQYQ4yVgf/TQZPw0Nl+df/j0Jhbc=";
+    };
+  };
+
+  sanitizePluginName = input:
+  let
+    name = lib.strings.getName input;
+    intermediate = lib.strings.removePrefix "vimplugin-" name;
+    result = lib.strings.removePrefix "lua5.1-" intermediate;
+  in result;
+
+  pluginList = plugins: lib.strings.concatMapStrings (plugin: "  [\"${sanitizePluginName plugin.name}\"] = \"${plugin.outPath}\",\n") plugins;
 
     # Split runtimepath into 3 directories:
     # - lua, to be prepended to the rtp at the beginning of init.lua
@@ -123,8 +144,57 @@ with lib;
         -- prepend lua directory
         vim.opt.rtp:prepend('${nvimRtp}/lua')
       ''
+      + (builtins.readFile ../nvim/lua/options.lua)
+      + (builtins.readFile ../nvim/lua/mappings.lua)
+      +
+      ''
+	local plugins = {
+        ${pluginList extendedPlugins}
+        }
+        local lazy_nix_helper_path = "${lazy-nix-helper-nvim}"
+        if not vim.loop.fs_stat(lazy_nix_helper_path) then
+          lazy_nix_helper_path = vim.fn.stdpath("data") .. "/lazy_nix_helper/lazy_nix_helper.nvim"
+          if not vim.loop.fs_stat(lazy_nix_helper_path) then
+            vim.fn.system({
+              "git",
+              "clone",
+              "--filter=blob:none",
+              "https://github.com/b-src/lazy_nix_helper.nvim.git",
+              lazy_nix_helper_path,
+            })
+          end
+        end
+
+        -- add the Lazy Nix Helper plugin to the vim runtime
+        vim.opt.rtp:prepend(lazy_nix_helper_path)
+
+        -- call the Lazy Nix Helper setup function
+        local non_nix_lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+        local lazy_nix_helper_opts = { lazypath = non_nix_lazypath, input_plugin_table = plugins }
+        require("lazy-nix-helper").setup(lazy_nix_helper_opts)
+
+        -- get the lazypath from Lazy Nix Helper
+        local lazypath = require("lazy-nix-helper").lazypath()
+        if not vim.loop.fs_stat(lazypath) then
+          vim.fn.system({
+            "git",
+            "clone",
+            "--filter=blob:none",
+            "https://github.com/folke/lazy.nvim.git",
+            "--branch=stable", -- latest stable release
+            lazypath,
+          })
+        end
+        vim.opt.rtp:prepend(lazypath)
+      	-- install and load plugins from your configuration
+	require("lazy").setup({
+  spec = {
+    { import = "plugins" },
+  },})
+
+      ''
       # Wrap init.lua
-      + (builtins.readFile ../nvim/lua/init.lua)
+      # + (builtins.readFile ../nvim/lua/init.lua)
       # Bootstrap/load dev plugins
       + optionalString (devPlugins != []) (
         ''

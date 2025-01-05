@@ -1,6 +1,6 @@
 require("mappings")
 require("options")
-require("lazy")
+require("lazy_setup")
 
 
 local augroup = vim.api.nvim_create_augroup
