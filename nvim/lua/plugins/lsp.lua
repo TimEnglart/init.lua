@@ -79,7 +79,9 @@ return {
             rust_analyzer = {},
             ts_ls = {},
             html = { filetypes = { 'html', 'twig', 'hbs' } },
-
+            nil_ls = {
+                formatter = { command = {"nixpkgs-fmt"}},
+            },
             lua_ls = {
                 Lua = {
                     workspace = { checkThirdParty = false },

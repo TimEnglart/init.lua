@@ -1,5 +1,5 @@
 # This overlay, when applied to nixpkgs, adds the final neovim derivation to nixpkgs.
-{inputs}: final: prev:
+{ inputs }: final: prev:
 with final.pkgs.lib; let
   pkgs = final;
 
@@ -66,8 +66,8 @@ with final.pkgs.lib; let
     # mason-nvim
     # mason-lspconfig-nvim
     # mason-nvim-dap-nvim
-    nvim-dap 
-    nvim-dap-ui 
+    nvim-dap
+    nvim-dap-ui
     nvim-dap-go
     fidget-nvim
     lazydev-nvim
@@ -94,7 +94,7 @@ with final.pkgs.lib; let
     # ^ bleeding-edge plugins from flake inputs
     which-key-nvim
     neoconf-nvim
-    lazy-nvim 
+    lazy-nvim
     nvim-nio
     vim-fugitive
     vim-rhubarb
@@ -143,7 +143,8 @@ with final.pkgs.lib; let
     # gnutar
     # bash
   ];
-in {
+in
+{
   # This is the neovim derivation
   # returned by the overlay
   nvim-pkg = mkNeovim {
