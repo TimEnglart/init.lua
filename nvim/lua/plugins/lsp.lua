@@ -12,7 +12,7 @@ return {
         },
         {
             'williamboman/mason-lspconfig.nvim',
-            --enabled = require("lazy-nix-helper").mason_enabled(),
+            enabled = require("lazy-nix-helper").mason_enabled(),
             dir = require("lazy-nix-helper").get_plugin_path("mason-lspconfig.nvim"),
         },
         { 'j-hui/fidget.nvim', dir = require("lazy-nix-helper").get_plugin_path("fidget.nvim"), },
