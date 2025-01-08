@@ -63,9 +63,9 @@ with final.pkgs.lib; let
     # ^ UI
     # language support
     nvim-lspconfig
-    mason-nvim
-    mason-lspconfig-nvim
-    mason-nvim-dap-nvim
+    # mason-nvim
+    # mason-lspconfig-nvim
+    # mason-nvim-dap-nvim
     nvim-dap 
     nvim-dap-ui 
     nvim-dap-go
@@ -136,12 +136,12 @@ with final.pkgs.lib; let
     fd
     gcc
     # Mason
-    unzip
-    wget
-    curl
-    gzip
-    gnutar
-    bash
+    # unzip
+    # wget
+    # curl
+    # gzip
+    # gnutar
+    # bash
   ];
 in {
   # This is the neovim derivation

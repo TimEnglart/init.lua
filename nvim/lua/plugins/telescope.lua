@@ -29,7 +29,7 @@ return {
         },
     },
     config = function()
-        pcall(require('telescope').load_extension, 'fzf')
+        pcall(require('telescope').load_extension, 'fzy')
 
         -- See `:help telescope.builtin`
         vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles,
