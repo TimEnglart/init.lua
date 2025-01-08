@@ -1,12 +1,21 @@
 return {
     -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
+    dir = require("lazy-nix-helper").get_plugin_path("nvim-lspconfig"),
     dependencies = {
         -- Automatically install LSPs to stdpath for neovim
-        { 'williamboman/mason.nvim', config = true },
-        'williamboman/mason-lspconfig.nvim',
-        { 'j-hui/fidget.nvim',       tag = 'legacy', opts = {} },
-        'folke/neodev.nvim',
+        {
+            'williamboman/mason.nvim',
+            config = true,
+            enabled = require("lazy-nix-helper").mason_enabled(),
+            dir = require("lazy-nix-helper").get_plugin_path("mason.nvim"),
+        },
+        {
+            'williamboman/mason-lspconfig.nvim',
+            --enabled = require("lazy-nix-helper").mason_enabled(),
+            dir = require("lazy-nix-helper").get_plugin_path("mason-lspconfig.nvim"),
+        },
+        { 'j-hui/fidget.nvim', dir = require("lazy-nix-helper").get_plugin_path("fidget.nvim"), },
     },
     config = function()
         local on_attach = function(_, bufnr)
@@ -68,7 +77,7 @@ return {
             gopls = {},
             pyright = {},
             rust_analyzer = {},
-            tsserver = {},
+            ts_ls = {},
             html = { filetypes = { 'html', 'twig', 'hbs' } },
 
             lua_ls = {
@@ -79,30 +88,42 @@ return {
             },
         }
 
-        -- Setup neovim lua configuration
-        require('neodev').setup()
-
         -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
         local capabilities = vim.lsp.protocol.make_client_capabilities()
         capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
-        -- Ensure the servers above are installed
-        local mason_lspconfig = require('mason-lspconfig')
+        if require("lazy-nix-helper").mason_enabled() then
+            -- Ensure the servers above are installed
+            local mason_lspconfig = require('mason-lspconfig')
 
-        mason_lspconfig.setup({
-            ensure_installed = vim.tbl_keys(servers),
-        })
+            mason_lspconfig.setup({
+                ensure_installed = {
+                    ensure_installed = servers,
+                    automatic_installation = not require("lazy-nix-helper.util").in_a_nix_environment(),
+                },
+            })
 
-        mason_lspconfig.setup_handlers({
-            function(server_name)
-                require('lspconfig')[server_name].setup {
+            mason_lspconfig.setup_handlers({
+                function(server_name)
+                    require('lspconfig')[server_name].setup {
+                        capabilities = capabilities,
+                        on_attach = on_attach,
+                        settings = servers[server_name],
+                        filetypes = (servers[server_name] or {}).filetypes,
+                    }
+                end
+            })
+        else
+            local lspconfig = require('lspconfig')
+            for server_name, config in pairs(servers) do
+                lspconfig[server_name].setup {
                     capabilities = capabilities,
                     on_attach = on_attach,
-                    settings = servers[server_name],
-                    filetypes = (servers[server_name] or {}).filetypes,
+                    settings = config,
+                    filetypes = (config or {}).filetypes,
                 }
             end
-        })
+        end
 
         -- Formatting
         -- Switch for controlling whether you want autoformatting.
@@ -171,4 +192,3 @@ return {
         })
     end
 }
-

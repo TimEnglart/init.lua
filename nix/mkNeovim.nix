@@ -27,8 +27,8 @@ with lib;
     extraLuaPackages ? p: [],
     extraPython3Packages ? p: [], # Additional python 3 packages
     withPython3 ? true, # Build Neovim with Python 3 support?
-    withRuby ? false, # Build Neovim with Ruby support?
-    withNodeJs ? false, # Build Neovim with NodeJS support?
+    withRuby ? true, # Build Neovim with Ruby support?
+    withNodeJs ? true, # Build Neovim with NodeJS support?
     withSqlite ? true, # Add sqlite? This is a dependency for some plugins
     # You probably don't want to create vi or vim aliases
     # if the appName is something different than "nvim"
@@ -49,9 +49,9 @@ with lib;
       runtime = {};
     };
     
-    extendedPlugins = plugins ++ (with pkgs.vimPlugins; [lazy-nix-helper-nvim lazy-nvim nvim-dap nvim-dap-ui nvim-nio]);
+    extendedPlugins = plugins;
 
-    externalPackages = extraPackages ++ (optionals withSqlite [pkgs.sqlite]);
+    externalPackages = extraPackages ++ (optionals withSqlite [pkgs.sqlite]) ++ [ pkgs.gcc ];
 
     # Map all plugins to an attrset { plugin = <plugin>; config = <config>; optional = <tf>; ... }
     normalizedPlugins = map (x:
@@ -84,16 +84,6 @@ with lib;
         in
           lib.all (regex: builtins.match regex relPath == null) ignoreConfigRegexes;
       };
-
-      lazy-nix-helper-nvim = pkgs.vimUtils.buildVimPlugin {
-    name = "lazy-nix-helper.nvim";
-    src = pkgs.fetchFromGitHub {
-      owner = "b-src";
-      repo = "lazy-nix-helper.nvim";
-      rev = "master";
-      hash = "sha256-HwrO32Sj1FUWfnOZQYQ4yVgf/TQZPw0Nl+df/j0Jhbc=";
-    };
-  };
 
   sanitizePluginName = input:
   let
@@ -138,7 +128,19 @@ with lib;
     # It wraps the user init.lua, prepends the lua lib directory to the RTP
     # and prepends the nvim and after directory to the RTP
     # It also adds logic for bootstrapping dev plugins (for plugin developers)
-    initLua =
+    initLua = let 
+    # Add lazy-nix-helper plugin
+  lazy-nix-helper-nvim = pkgs.vimUtils.buildVimPlugin {
+    name = "lazy-nix-helper.nvim";
+    src = pkgs.fetchFromGitHub {
+      owner = "b-src";
+      repo = "lazy-nix-helper.nvim";
+      rev = "v0.6.0";
+      hash = "sha256-HwrO32Sj1FUWfnOZQYQ4yVgf/TQZPw0Nl+df/j0Jhbc=";
+    };
+  };
+    
+    in
       ''
         vim.loader.enable()
         -- prepend lua directory
@@ -156,7 +158,7 @@ with lib;
           lazy_nix_helper_path = vim.fn.stdpath("data") .. "/lazy_nix_helper/lazy_nix_helper.nvim"
           if not vim.loop.fs_stat(lazy_nix_helper_path) then
             vim.fn.system({
-              "git",
+              "${lib.getExe pkgs.git}",
               "clone",
               "--filter=blob:none",
               "https://github.com/b-src/lazy_nix_helper.nvim.git",
@@ -177,7 +179,7 @@ with lib;
         local lazypath = require("lazy-nix-helper").lazypath()
         if not vim.loop.fs_stat(lazypath) then
           vim.fn.system({
-            "git",
+           "${lib.getExe pkgs.git}",
             "clone",
             "--filter=blob:none",
             "https://github.com/folke/lazy.nvim.git",
@@ -187,11 +189,7 @@ with lib;
         end
         vim.opt.rtp:prepend(lazypath)
       	-- install and load plugins from your configuration
-	require("lazy").setup({
-  spec = {
-    { import = "plugins" },
-  },})
-
+        require("lazy").setup({ performance = { reset_packpath = false, rtp = { reset = false } }, spec = { { import = "plugins" }, },})
       ''
       # Wrap init.lua
       # + (builtins.readFile ../nvim/lua/init.lua)

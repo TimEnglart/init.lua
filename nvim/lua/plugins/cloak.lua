@@ -1,5 +1,6 @@
 return {
     'laytan/cloak.nvim',
+    dir = require("lazy-nix-helper").get_plugin_path("cloak.nvim"),
     opts = {
         enabled = true,
         cloak_character = '*',

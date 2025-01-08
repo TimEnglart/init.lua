@@ -28,6 +28,7 @@ with final.pkgs.lib; let
   all-plugins = with pkgs.vimPlugins; [
     # plugins from nixpkgs go in here.
     # https://search.nixos.org/packages?channel=unstable&from=0&size=50&sort=relevance&type=packages&query=vimPlugins
+    # nvim-treesitter
     nvim-treesitter.withAllGrammars
     luasnip # snippets | https://github.com/l3mon4d3/luasnip/
     # nvim-cmp (autocompletion) and extensions
@@ -41,6 +42,7 @@ with final.pkgs.lib; let
     cmp-nvim-lua # neovim lua API as completion source | https://github.com/hrsh7th/cmp-nvim-lua/
     cmp-cmdline # cmp command line suggestions
     cmp-cmdline-history # cmp command line history suggestions
+    friendly-snippets
     # ^ nvim-cmp extensions
     # git integration plugins
     diffview-nvim # https://github.com/sindrets/diffview.nvim/
@@ -60,6 +62,15 @@ with final.pkgs.lib; let
     nvim-treesitter-context # nvim-treesitter-context
     # ^ UI
     # language support
+    nvim-lspconfig
+    mason-nvim
+    mason-lspconfig-nvim
+    mason-nvim-dap-nvim
+    nvim-dap 
+    nvim-dap-ui 
+    nvim-dap-go
+    fidget-nvim
+    lazydev-nvim
     # ^ language support
     # navigation/editing enhancement plugins
     vim-unimpaired # predefined ] and [ navigation keymaps | https://github.com/tpope/vim-unimpaired/
@@ -75,20 +86,62 @@ with final.pkgs.lib; let
     sqlite-lua
     plenary-nvim
     nvim-web-devicons
+    mini-icons
     vim-repeat
     # ^ libraries that other plugins depend on
     # bleeding-edge plugins from flake inputs
     # (mkNvimPlugin inputs.wf-nvim "wf.nvim") # (example) keymap hints | https://github.com/Cassin01/wf.nvim
     # ^ bleeding-edge plugins from flake inputs
     which-key-nvim
+    neoconf-nvim
+    lazy-nvim 
+    nvim-nio
+    vim-fugitive
+    vim-rhubarb
+    vim-sleuth
+    zen-mode-nvim
+    undotree
+    cloak-nvim
+    copilot-lua
+    comment-nvim
+    harpoon2
 
-    #
+    # Theme
+    rose-pine
+    onedark-nvim
+    tokyonight-nvim
   ];
 
+  # Language Servers, etc
   extraPackages = with pkgs; [
-    # language servers, etc.
+    # Lua
     lua-language-server
+    stylua
+    # Nix
     nil # nix LSP
+    nixfmt-rfc-style
+    # Golang
+    gopls
+    delve
+    # Rust
+    rust-analyzer
+    # Zig
+    zls
+    # C
+    llvmPackages_latest.clang
+
+    # Requirements for plugins
+    # Treesitter
+    ripgrep
+    fd
+    gcc
+    # Mason
+    unzip
+    wget
+    curl
+    gzip
+    gnutar
+    bash
   ];
 in {
   # This is the neovim derivation

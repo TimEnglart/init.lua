@@ -1,16 +1,18 @@
 return {
     {
         'hrsh7th/nvim-cmp',
+        dir = require("lazy-nix-helper").get_plugin_path('nvim-cmp-scm'),
         dependencies = {
             -- Snippet Engine & its associated nvim-cmp source
-            'L3MON4D3/LuaSnip',
-            'saadparwaiz1/cmp_luasnip',
+            { 'L3MON4D3/LuaSnip',                    dir = require("lazy-nix-helper").get_plugin_path('luasnip'), },
+            { 'saadparwaiz1/cmp_luasnip',            dir = require("lazy-nix-helper").get_plugin_path('cmp_luasnip'), },
 
             -- Adds LSP completion capabilities
-            'hrsh7th/cmp-nvim-lsp',
+            { 'hrsh7th/cmp-nvim-lsp',                dir = require("lazy-nix-helper").get_plugin_path('cmp-nvim-lsp'), },
+            { 'hrsh7th/cmp-nvim-lsp-signature-help', dir = require("lazy-nix-helper").get_plugin_path('cmp-nvim-lsp-signature-help'), },
 
             -- Adds a number of user-friendly snippets
-            'rafamadriz/friendly-snippets',
+            { 'rafamadriz/friendly-snippets',        dir = require("lazy-nix-helper").get_plugin_path('friendly-snippets'), },
         },
         config = function()
             -- [[ Configure nvim-cmp ]]
@@ -38,8 +40,8 @@ return {
                     ['<Tab>'] = cmp.mapping(function(fallback)
                         if cmp.visible() then
                             cmp.select_next_item()
-                        elseif require("copilot.suggestion").is_visible() then
-                            require("copilot.suggestion").accept()
+                        -- elseif require("copilot.suggestion").is_visible() then
+                        --     require("copilot.suggestion").accept()
                         elseif luasnip.expand_or_locally_jumpable() then
                             luasnip.expand_or_jump()
                         else
@@ -59,9 +61,9 @@ return {
                 sources = {
                     { name = 'nvim_lsp' },
                     { name = 'luasnip' },
+                    { name = 'nvim_lsp_signature_help' }
                 },
             }
         end
-    }
+    },
 }
-

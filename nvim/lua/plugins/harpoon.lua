@@ -1,7 +1,8 @@
 return {
     "ThePrimeagen/harpoon",
+    dir = require("lazy-nix-helper").get_plugin_path("harpoon2"),
     branch = "harpoon2",
-    dependencies = { "nvim-lua/plenary.nvim", "nvim-telescope/telescope.nvim" },
+    -- dependencies = { "nvim-lua/plenary.nvim", "nvim-telescope/telescope.nvim" },
     opts = {},
     config = function()
         local harpoon = require("harpoon")

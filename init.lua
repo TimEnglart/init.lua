@@ -1,1 +1,1 @@
-require('tim')
+require('nvim')

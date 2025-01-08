@@ -2,6 +2,7 @@ return {
     { 
         "rose-pine/neovim", 
         name = "rose-pine",
+        dir = require("lazy-nix-helper").get_plugin_path("rose-pine"),
         priority = 1000,
         config = function()
             require('rose-pine').setup({
@@ -12,6 +13,7 @@ return {
     },
     {
         'navarasu/onedark.nvim',
+        dir = require("lazy-nix-helper").get_plugin_path("onedark.nvim"),
         priority = 1000,
         config = function()
             -- vim.cmd.colorscheme 'onedark'
@@ -19,6 +21,7 @@ return {
     },
     {
         "folke/tokyonight.nvim",
+        dir = require("lazy-nix-helper").get_plugin_path("tokyonight.nvim"),
         lazy = false,
         priority = 1000,
         opts = {},
@@ -26,6 +29,7 @@ return {
     {
         -- Set lualine as statusline
         'nvim-lualine/lualine.nvim',
+        dir = require("lazy-nix-helper").get_plugin_path("lualine.nvim"),
         -- See `:help lualine.txt`
         opts = {
             options = {
