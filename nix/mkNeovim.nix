@@ -134,6 +134,7 @@ let
       if [ ! -z "$(ls -A)" ]; then
           cp -r -- * $out/nvim
       fi
+      #
     '';
   };
 
