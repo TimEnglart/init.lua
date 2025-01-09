@@ -9,7 +9,7 @@ return {
                 dir = require("lazy-nix-helper").get_plugin_path("nvim-treesitter-textobjects"),
             },
             {
-                'nvim-treesitter-context',
+                'nvim-treesitter/nvim-treesitter-context',
                 dir = require("lazy-nix-helper").get_plugin_path("nvim-treesitter-context"),
             },
         },

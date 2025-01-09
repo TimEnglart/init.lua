@@ -1,6 +1,8 @@
 require("mappings")
 require("options")
-require("lazy_setup")
+
+-- plugins, lazy_nix_helper_path, and gitPath are defined in nix/mkNeovim.nix before this file is sourced
+require("lazy_setup")((lazy_nix_helper_path or nil), (plugins or {}), (gitPath or "git"))
 
 
 local augroup = vim.api.nvim_create_augroup

@@ -27,5 +27,5 @@ return {
   { "nvim-neotest/nvim-nio", dir = require("lazy-nix-helper").get_plugin_path("nvim-nio"), },
   { "nvim-tree/nvim-web-devicons", opts = {}, dir = require("lazy-nix-helper").get_plugin_path("nvim-web-devicons"), },
   { 'echasnovski/mini.nvim', version = '*', dir = require("lazy-nix-helper").get_plugin_path("mini.icons"), },
-  { 'sindrets/diffview.nvim/', dir = require("lazy-nix-helper").get_plugin_path("diffview.nvim"), },
+  { 'sindrets/diffview.nvim', dir = require("lazy-nix-helper").get_plugin_path("diffview.nvim"), },
 }

@@ -45,6 +45,7 @@
             # The generated file can be symlinked in the devShell's shellHook.
             gen-luarc.overlays.default
           ];
+          config.allowUnfree = true;
         };
         shell = pkgs.mkShell {
           name = "nvim-devShell";
@@ -69,6 +70,7 @@
         };
         devShells = {
           default = shell;
+          go = (import ./nix/shells/go.nix { inherit pkgs; });
         };
       })
     // {
