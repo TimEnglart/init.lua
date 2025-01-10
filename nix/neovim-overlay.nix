@@ -155,6 +155,7 @@ in
   # returned by the overlay
   nvim-pkg = mkNeovim {
     plugins = all-plugins;
+    appName = "tnvim";
     inherit extraPackages;
   };
 

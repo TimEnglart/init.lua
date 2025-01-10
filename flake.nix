@@ -35,7 +35,7 @@
     flake-utils.lib.eachSystem supportedSystems
       (system:
       let
-        pkgs = import nixpkgs {
+        importPkgs = attrs: import nixpkgs ({
           inherit system;
           overlays = [
             # Import the overlay, so that the final Neovim derivation(s) can be accessed via pkgs.<nvim-pkg>
@@ -45,8 +45,8 @@
             # The generated file can be symlinked in the devShell's shellHook.
             gen-luarc.overlays.default
           ];
-          config.allowUnfree = true;
-        };
+        } // attrs);
+        pkgs = importPkgs {};
         shell = pkgs.mkShell {
           name = "nvim-devShell";
           buildInputs = with pkgs; [
@@ -56,6 +56,7 @@
             nixfmt-rfc-style
             stylua
             luajitPackages.luacheck
+            nvim-pkg
           ];
           shellHook = ''
             # symlink the .luarc.json generated in the overlay
@@ -70,7 +71,7 @@
         };
         devShells = {
           default = shell;
-          go = (import ./nix/shells/go.nix { inherit pkgs; });
+          go = (import ./nix/shells/go.nix { pkgs = (importPkgs { config.allowUnfree = true; }); });
         };
       })
     // {
