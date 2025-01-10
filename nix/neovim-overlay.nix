@@ -153,7 +153,7 @@ in
 {
   # This is the neovim derivation
   # returned by the overlay
-  nvim-pkg = mkNeovim {
+  tnvim = mkNeovim {
     plugins = all-plugins;
     appName = "tnvim";
     inherit extraPackages;

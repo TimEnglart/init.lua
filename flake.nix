@@ -56,7 +56,7 @@
             nixfmt-rfc-style
             stylua
             luajitPackages.luacheck
-            nvim-pkg
+            tnvim
           ];
           shellHook = ''
             # symlink the .luarc.json generated in the overlay
@@ -67,7 +67,7 @@
       {
         packages = rec {
           default = nvim;
-          nvim = pkgs.nvim-pkg;
+          nvim = pkgs.tnvim;
         };
         devShells = {
           default = shell;
