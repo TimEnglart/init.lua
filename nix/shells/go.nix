@@ -87,7 +87,7 @@ let
         direnv
 
         # Custom nvim
-        nvim-pkg
+        tnvim
         # Static compilation
         #musl
       ]

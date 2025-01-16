@@ -35,10 +35,10 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-local lazy_config = { spec = { import = "plugins" }, change_detection = { notify = false } }
-if require("lazy-nix-helper.util").in_a_nix_environment() then
-  lazy_config.performace = { reset_packpath = false, rtp = { reset = false } }
-end
-
-require("lazy").setup(lazy_config)
+local is_nix = require("lazy-nix-helper.util").in_a_nix_environment()
+require("lazy").setup({
+    performance = { reset_packpath = not is_nix, rtp = { reset = not is_nix } },
+    spec = { { import = "plugins" }, },
+    change_detection = { notify = not is_nix },
+})
 end
