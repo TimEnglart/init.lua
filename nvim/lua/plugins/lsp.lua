@@ -111,6 +111,7 @@ return {
             },
             pyright = {},
             rust_analyzer = {},
+            jsonls = {},
             ts_ls = {},
             html = { filetypes = { 'html', 'twig', 'hbs' } },
             nil_ls = {
