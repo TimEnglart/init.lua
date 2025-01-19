@@ -6,8 +6,7 @@ let
   pkgs = final;
 
   # Use this to create a plugin from a flake input
-  mkNvimPlugin =
-    src: pname:
+  mkNvimPlugin = src: pname:
     pkgs.vimUtils.buildVimPlugin {
       inherit pname src;
       version = src.lastModifiedDate;
@@ -149,8 +148,7 @@ let
     # gnutar
     # bash
   ];
-in
-{
+in {
   # This is the neovim derivation
   # returned by the overlay
   tnvim = mkNeovim {
@@ -160,9 +158,7 @@ in
   };
 
   # This can be symlinked in the devShell's shellHook
-  nvim-luarc-json = final.mk-luarc-json {
-    plugins = all-plugins;
-  };
+  nvim-luarc-json = final.mk-luarc-json { plugins = all-plugins; };
 
   # You can add as many derivations as you like.
   # Use `ignoreConfigRegexes` to filter out config

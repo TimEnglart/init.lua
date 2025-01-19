@@ -5,6 +5,7 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
     gen-luarc.url = "github:mrcjkb/nix-gen-luarc-json";
+    treefmt-nix.url = "github:numtide/treefmt-nix";
 
     # Add bleeding-edge plugins here.
     # They can be updated with `nix flake update` (make sure to commit the generated flake.lock)
@@ -14,39 +15,28 @@
     # };
   };
 
-  outputs =
-    inputs @ { self
-    , nixpkgs
-    , flake-utils
-    , gen-luarc
-    , ...
-    }:
+  outputs = inputs@{ self, nixpkgs, flake-utils, gen-luarc, treefmt-nix, ... }:
     let
-      supportedSystems = [
-        "x86_64-linux"
-        "aarch64-linux"
-        "x86_64-darwin"
-        "aarch64-darwin"
-      ];
+      supportedSystems =
+        [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin" ];
 
       # This is where the Neovim derivation is built.
       neovim-overlay = import ./nix/neovim-overlay.nix { inherit inputs; };
-    in
-    flake-utils.lib.eachSystem supportedSystems
-      (system:
+    in flake-utils.lib.eachSystem supportedSystems (system:
       let
-        importPkgs = attrs: import nixpkgs ({
-          inherit system;
-          overlays = [
-            # Import the overlay, so that the final Neovim derivation(s) can be accessed via pkgs.<nvim-pkg>
-            neovim-overlay
-            # This adds a function can be used to generate a .luarc.json
-            # containing the Neovim API all plugins in the workspace directory.
-            # The generated file can be symlinked in the devShell's shellHook.
-            gen-luarc.overlays.default
-          ];
-        } // attrs);
-        pkgs = importPkgs {};
+        importPkgs = attrs:
+          import nixpkgs ({
+            inherit system;
+            overlays = [
+              # Import the overlay, so that the final Neovim derivation(s) can be accessed via pkgs.<nvim-pkg>
+              neovim-overlay
+              # This adds a function can be used to generate a .luarc.json
+              # containing the Neovim API all plugins in the workspace directory.
+              # The generated file can be symlinked in the devShell's shellHook.
+              gen-luarc.overlays.default
+            ];
+          } // attrs);
+        pkgs = importPkgs { };
         shell = pkgs.mkShell {
           name = "nvim-devShell";
           buildInputs = with pkgs; [
@@ -63,19 +53,20 @@
             ln -fs ${pkgs.nvim-luarc-json} .luarc.json
           '';
         };
-      in
-      {
+      in {
         packages = rec {
           default = nvim;
           nvim = pkgs.tnvim;
         };
         devShells = {
           default = shell;
-          go = (import ./nix/shells/go.nix { pkgs = (importPkgs { config.allowUnfree = true; }); });
+          go = (import ./nix/shells/go.nix {
+            pkgs = (importPkgs { config.allowUnfree = true; });
+          });
         };
-      })
-    // {
-      # You can add this overlay to your NixOS configuration
-      overlays.default = neovim-overlay;
-    };
+        formatter = pkgs.nixfmt-classic;
+      }) // {
+        # You can add this overlay to your NixOS configuration
+        overlays.default = neovim-overlay;
+      };
 }
