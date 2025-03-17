@@ -6,7 +6,8 @@ let
   pkgs = final;
 
   # Use this to create a plugin from a flake input
-  mkNvimPlugin = src: pname:
+  mkNvimPlugin =
+    src: pname:
     pkgs.vimUtils.buildVimPlugin {
       inherit pname src;
       version = src.lastModifiedDate;
@@ -119,21 +120,77 @@ let
 
   # Language Servers, etc
   extraPackages = with pkgs; [
-    # Lua
-    lua-language-server
-    stylua
-    # Nix
-    nil # nix LSP
-    nixfmt-rfc-style
+    # Arduino
+    arduino-language-server
+    # Bash
+    bash-language-server
+    # C
+    llvmPackages_latest.clang
+    # Cmake
+    cmake-language-server
+    # C#
+    csharp-ls
+    # Dart
+    # dart
+    # Deno
+    # deno
+    # Docker Compose
+    docker-compose-language-service
+    # Dockerfile
+    dockerfile-language-server-nodejs
+    # Elixir
+    # beamMinimal27Packages.elixir-ls
+    # Erlang
+    erlang-language-platform
+    # Fish
+    fish-lsp
+    # GitHub Actions
+    # gh-actions-language-server
+    # Gitlab CI
+    gitlab-ci-ls
+    # Gleam
+    # gleam
     # Golang
     gopls
     delve
+    # GraphQL
+    # graphql-language-service-cli
+    # HTML
+    vscode-langservers-extracted
+    # HTMX
+    htmx-lsp2
+    # Jinja
+    jinja-lsp
+    # JSON
+    # vscode-langservers-extracted
+    # Kotlin
+    kotlin-language-server
+    # Lua
+    lua-language-server
+    stylua
+    # Markdown Oxide
+    markdown-oxide
+    # Nix
+    nil # nix LSP
+    nixfmt-rfc-style
+    # Nomad
+    # nomad-lsp
+    # Python
+    pyright
+    # Salt
+    # salt-ls
     # Rust
     rust-analyzer
+    # SQL
+    sqls
+    # Systemd
+    systemd-language-server
+    # Terraform
+    terraform-lsp
+    # YAML
+    yaml-language-server
     # Zig
     zls
-    # C
-    llvmPackages_latest.clang
 
     # Requirements for plugins
     # Treesitter
@@ -148,7 +205,8 @@ let
     # gnutar
     # bash
   ];
-in {
+in
+{
   # This is the neovim derivation
   # returned by the overlay
   tnvim = mkNeovim {

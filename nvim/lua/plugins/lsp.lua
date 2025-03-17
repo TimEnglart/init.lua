@@ -73,7 +73,30 @@ return {
         --  If you want to override the default filetypes that your language server will attach to you can
         --  define the property 'filetypes' to the map in question.
         local servers = {
+            arduino_language_server = {},
+            bashls = {},
             clangd = {},
+            cmake = {},
+            csharp_ls = {},
+            css_variables = {},
+            cssmodules_ls = {},
+            dartls = {
+                settings = {
+                    dart = {
+                        completeFunctionCalls = true,
+                        showTodos = true
+                    },
+                },
+            },
+            denols = {},
+            docker_compose_language_service = {},
+            dockerls = {},
+            elixirls = {},
+            erlangls = {},
+            fish_lsp = {},
+            gh_actions_ls = {},
+            gitlab_ci_ls = {},
+            gleam = {},
             gopls = {
                 gopls = {
                     gofumpt = true,
@@ -109,22 +132,35 @@ return {
                     semanticTokens = true,
                 },
             },
-            pyright = {},
-            rust_analyzer = {},
-            jsonls = {},
-            ts_ls = {},
+            graphql = {},
             html = { filetypes = { 'html', 'twig', 'hbs' } },
-            nil_ls = {
-                ['nil'] = {
-                    formatting = { command = { "nixfmt" } },
-                },
-            },
+            htmx = {},
+            jinja_lsp = {},
+            jsonls = {},
+            kotlin_language_server = {},
             lua_ls = {
                 Lua = {
                     workspace = { checkThirdParty = false },
                     telemetry = { enable = false },
                 },
             },
+            markdown_oxide = {},
+            nil_ls = {
+                ['nil'] = {
+                    formatting = { command = { "nixfmt" } },
+                },
+            },
+            nomad_lsp = {},
+            pyright = {},
+            ruby_lsp = {},
+            salt_ls = {},
+            rust_analyzer = {},
+            sqls = {},
+            systemd_ls = {},
+            terraform_lsp = {},
+            ts_ls = {},
+            yamlls = {},
+            zls = {},
         }
 
         -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
