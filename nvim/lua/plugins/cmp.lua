@@ -1,7 +1,7 @@
 return {
     {
         'hrsh7th/nvim-cmp',
-        dir = require("lazy-nix-helper").get_plugin_path('nvim-cmp-scm'),
+        dir = require("lazy-nix-helper").get_plugin_path('nvim-cmp'),
         dependencies = {
             -- Snippet Engine & its associated nvim-cmp source
             { 'L3MON4D3/LuaSnip',                    dir = require("lazy-nix-helper").get_plugin_path('luasnip'), },
@@ -40,8 +40,8 @@ return {
                     ['<Tab>'] = cmp.mapping(function(fallback)
                         if cmp.visible() then
                             cmp.select_next_item()
-                        -- elseif require("copilot.suggestion").is_visible() then
-                        --     require("copilot.suggestion").accept()
+                            -- elseif require("copilot.suggestion").is_visible() then
+                            --     require("copilot.suggestion").accept()
                         elseif luasnip.expand_or_locally_jumpable() then
                             luasnip.expand_or_jump()
                         else

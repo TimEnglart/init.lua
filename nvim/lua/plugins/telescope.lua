@@ -1,9 +1,9 @@
 return {
     'nvim-telescope/telescope.nvim',
-    dir = require("lazy-nix-helper").get_plugin_path("telescope.nvim-scm"),
+    dir = require("lazy-nix-helper").get_plugin_path("telescope.nvim"),
     branch = '0.1.x',
     dependencies = {
-        { 'nvim-lua/plenary.nvim', dir = require("lazy-nix-helper").get_plugin_path("plenary.nvim-scm"),},
+        { 'nvim-lua/plenary.nvim', dir = require("lazy-nix-helper").get_plugin_path("plenary.nvim"), },
         -- Fuzzy Finder Algorithm which requires local dependencies to be built.
         -- Only load if `make` is available. Make sure you have the system
         -- requirements installed.
