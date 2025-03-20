@@ -37,6 +37,13 @@ return {
                         behavior = cmp.ConfirmBehavior.Replace,
                         select = true,
                     },
+                    ['<C-z>'] = cmp.mapping(function(fallback)
+                        if require("copilot.suggestion").is_visible() then
+                            require("copilot.suggestion").accept()
+                        else
+                            fallback()
+                        end
+                    end, { 'i', 's' }),
                     ['<Tab>'] = cmp.mapping(function(fallback)
                         if cmp.visible() then
                             cmp.select_next_item()
