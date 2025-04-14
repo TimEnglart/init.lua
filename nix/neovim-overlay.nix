@@ -109,9 +109,10 @@ let
     undotree
     cloak-nvim
     copilot-lua
+    CopilotChat-nvim
     comment-nvim
     harpoon2
-
+    render-markdown-nvim
     # Theme
     rose-pine
     onedark-nvim
