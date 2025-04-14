@@ -160,6 +160,14 @@ return {
             terraform_lsp = {},
             ts_ls = {},
             yamlls = {
+                settings = {
+                    yaml = {
+                        format = {
+                            enable = true,
+                            singleQuote = true,
+                        },
+                    },
+                },
                 filetypes = { "yaml", "yml", "yaml.docker-compose", "yaml.gitlab" },
             },
             zls = {},
@@ -182,23 +190,22 @@ return {
 
             mason_lspconfig.setup_handlers({
                 function(server_name)
-                    require('lspconfig')[server_name].setup {
+                    vim.lsp.config(server_name, {
                         capabilities = capabilities,
                         on_attach = on_attach,
                         settings = servers[server_name],
                         filetypes = (servers[server_name] or {}).filetypes,
-                    }
+                    })
                 end
             })
         else
-            local lspconfig = require('lspconfig')
             for server_name, config in pairs(servers) do
-                lspconfig[server_name].setup {
+                vim.lsp.config(server_name, {
                     capabilities = capabilities,
                     on_attach = on_attach,
                     settings = config,
                     filetypes = (config or {}).filetypes,
-                }
+                })
             end
         end
 

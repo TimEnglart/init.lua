@@ -189,6 +189,8 @@ let
     terraform-lsp
     # YAML
     yaml-language-server
+    yamlfmt
+    yq-go
     # Zig
     zls
 
