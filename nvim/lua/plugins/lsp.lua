@@ -159,7 +159,9 @@ return {
             systemd_ls = {},
             terraform_lsp = {},
             ts_ls = {},
-            yamlls = {},
+            yamlls = {
+                filetypes = { "yaml", "yml", "yaml.docker-compose", "yaml.gitlab" },
+            },
             zls = {},
         }
 

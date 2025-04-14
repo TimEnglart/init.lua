@@ -11,6 +11,8 @@ return {
             -- typescript = { "eslint_d" },
             -- vue = { "eslint_d" },
             go = { "golangcilint" },
+            yaml = { "yq" },
+            nix = { "nix" },
             -- python = { "ruff" },
         }
 
@@ -28,3 +30,4 @@ return {
         end, { desc = "Trigger linting for current file" })
     end,
 }
+
