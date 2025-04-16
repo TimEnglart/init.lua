@@ -78,6 +78,9 @@ let
     # linting
     nvim-lint
     # ^ linting
+    # formatting
+    conform-nvim
+    # ^ formatting
     # navigation/editing enhancement plugins
     vim-unimpaired # predefined ] and [ navigation keymaps | https://github.com/tpope/vim-unimpaired/
     eyeliner-nvim # Highlights unique characters for f/F and t/T motions | https://github.com/jinh0/eyeliner.nvim

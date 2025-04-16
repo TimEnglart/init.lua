@@ -1,5 +1,6 @@
 return {
   "stevearc/conform.nvim",
+  dir = require("lazy-nix-helper").get_plugin_path("conform.nvim"),
   event = { "BufWritePre" },
   cmd = { "ConformInfo" },
   keys = {
