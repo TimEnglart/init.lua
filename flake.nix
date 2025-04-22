@@ -99,7 +99,7 @@
             pkgs = importPkgs { config.allowUnfree = true; };
           };
         };
-        formatter = treefmtEval.${system}.config.build.wrapper;
+        formatter = treefmtEval.config.build.wrapper;
 
         checks = {
           pre-commit-check = pre-commit-hooks.lib.${system}.run {

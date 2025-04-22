@@ -1,0 +1,23 @@
+# Top-most EditorConfig file
+root = true
+
+# Unix-style newlines with a newline ending every file, UTF-8 charset
+[*]
+indent_style = space
+indent_size = 2
+tab_width = 8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+charset = utf-8
+
+[*.lua]
+max_line_length = 120
+
+# Match Nix files, set indent to spaces with width of two
+[*.nix]
+indent_size = 2
+
+# Match diffs, avoid to trim trailing whitespace
+[*.{diff,patch}]
+trim_trailing_whitespace = false

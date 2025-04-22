@@ -1,12 +1,14 @@
 # This overlay, when applied to nixpkgs, adds the final neovim derivation to nixpkgs.
 { inputs }:
-final: prev:
+final: _:
 with final.pkgs.lib;
 let
   pkgs = final;
 
   # Use this to create a plugin from a flake input
-  mkNvimPlugin = src: pname:
+  # deadnix: skip
+  mkNvimPlugin =
+    src: pname:
     pkgs.vimUtils.buildVimPlugin {
       inherit pname src;
       version = src.lastModifiedDate;
@@ -211,7 +213,8 @@ let
     # gnutar
     # bash
   ];
-in {
+in
+{
   # This is the neovim derivation
   # returned by the overlay
   tnvim = mkNeovim {
