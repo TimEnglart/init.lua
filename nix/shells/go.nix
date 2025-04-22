@@ -1,6 +1,8 @@
-{ pkgs ? import <nixpkgs> { }, }:
+{
+  pkgs ? import <nixpkgs> { },
+}:
 let
-  lib = pkgs.lib;
+  inherit (pkgs) lib;
 
   shell = pkgs.mkShell {
     name = "go";
@@ -43,11 +45,17 @@ let
     #   "-extldflags '-static -L${pkgs.musl}/lib'"
     #];
 
-    buildInputs = with pkgs; [ stdenv go glibc gcc libcap ];
+    buildInputs = with pkgs; [
+      stdenv
+      go
+      glibc
+      gcc
+      libcap
+    ];
 
-    NIX_LD_LIBRARY_PATH =
-      pkgs.lib.makeLibraryPath (with pkgs; [ stdenv.cc.cc ]);
+    NIX_LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath (with pkgs; [ stdenv.cc.cc ]);
 
     NIX_LD = builtins.readFile "${pkgs.stdenv.cc}/nix-support/dynamic-linker";
   };
-in shell
+in
+shell
