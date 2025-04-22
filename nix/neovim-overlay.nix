@@ -6,8 +6,7 @@ let
   pkgs = final;
 
   # Use this to create a plugin from a flake input
-  mkNvimPlugin =
-    src: pname:
+  mkNvimPlugin = src: pname:
     pkgs.vimUtils.buildVimPlugin {
       inherit pname src;
       version = src.lastModifiedDate;
@@ -46,6 +45,7 @@ let
     cmp-cmdline # cmp command line suggestions
     cmp-cmdline-history # cmp command line history suggestions
     friendly-snippets
+    copilot-cmp
     # ^ nvim-cmp extensions
     # git integration plugins
     diffview-nvim # https://github.com/sindrets/diffview.nvim/
@@ -211,8 +211,7 @@ let
     # gnutar
     # bash
   ];
-in
-{
+in {
   # This is the neovim derivation
   # returned by the overlay
   tnvim = mkNeovim {
