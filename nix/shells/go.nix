@@ -2,39 +2,35 @@
   pkgs ? import <nixpkgs> { },
 }:
 let
-  inherit (pkgs) lib;
+  inherit (import ./base.nix { inherit pkgs; }) nativeBuildInputs buildInputs;
 
   shell = pkgs.mkShell {
     name = "go";
     hardeningDisable = [ "fortify" ];
-    nativeBuildInputs = with pkgs; [
-      # Golang
-      go # go
-      gopls
-      go-tools
-      golangci-lint
-      delve
-      gofumpt
-      go-mockery
-      # GRPC
-      grpcui
-      protobuf
-      go-protobuf
+    nativeBuildInputs =
+      with pkgs;
+      [
+        # Golang
+        go # go
+        gopls
+        go-tools
+        golangci-lint
+        delve
+        gofumpt
+        go-mockery
+        # GRPC
+        grpcui
+        protobuf
+        go-protobuf
 
-      # vscode # WSL Handles this
-      # neovim
+        # Misc
+        jq
+        yq-go
 
-      # Misc
-      jq
-      yq-go
-      git
-      direnv
-
-      # Custom nvim
-      # tnvim
-      # Static compilation
-      #musl
-    ];
+        # Static compilation
+        #musl
+      ]
+      ++ nativeBuildInputs;
 
     shellHook = "\n\n";
 
@@ -45,13 +41,12 @@ let
     #   "-extldflags '-static -L${pkgs.musl}/lib'"
     #];
 
-    buildInputs = with pkgs; [
-      stdenv
-      go
-      glibc
-      gcc
-      libcap
-    ];
+    buildInputs =
+      with pkgs;
+      [
+        go
+      ]
+      ++ buildInputs;
 
     NIX_LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath (with pkgs; [ stdenv.cc.cc ]);
 
