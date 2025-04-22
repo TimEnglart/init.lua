@@ -5,8 +5,14 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
     gen-luarc.url = "github:mrcjkb/nix-gen-luarc-json";
-    treefmt-nix.url = "github:numtide/treefmt-nix";
-    pre-commit-hooks.url = "github:cachix/git-hooks.nix";
+    treefmt-nix = {
+      url = "github:numtide/treefmt-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    pre-commit-hooks = {
+      url = "github:cachix/git-hooks.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # Add bleeding-edge plugins here.
     # They can be updated with `nix flake update` (make sure to commit the generated flake.lock)
@@ -62,7 +68,9 @@
           # Used to find the project root
           projectRootFile = "flake.nix";
           programs = {
-            nixfmt.enable = true;
+            nixfmt = {
+              enable = true;
+            };
             stylua.enable = true;
           };
         });
@@ -95,9 +103,7 @@
               + self.checks.${system}.pre-commit-check.shellHook;
 
           };
-          go = import ./nix/shells/go.nix {
-            pkgs = importPkgs { config.allowUnfree = true; };
-          };
+          go = import ./nix/shells/go.nix { pkgs = importPkgs { config.allowUnfree = true; }; };
         };
         formatter = treefmtEval.config.build.wrapper;
 

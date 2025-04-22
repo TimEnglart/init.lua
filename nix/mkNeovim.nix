@@ -102,11 +102,13 @@ let
     let
       name = lib.strings.getName input;
     in
-    removeFixes name [
-      "vimplugin-"
-      "lua5.1-"
-      "luajit2.1-"
-    ] [ "-scm" ];
+    removeFixes name
+      [
+        "vimplugin-"
+        "lua5.1-"
+        "luajit2.1-"
+      ]
+      [ "-scm" ];
 
   pluginList =
     plugins:
