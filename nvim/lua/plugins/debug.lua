@@ -102,7 +102,8 @@ return {
           type = 'go',
           name = 'Debug Package (with config.out)',
           request = 'launch',
-          program = '${workspaceFolder}/.config.out',
+          program = '${workspaceFolder}',
+          args = { '-config=${workspaceFolder}/.config.out' },
         },
       },
     })
