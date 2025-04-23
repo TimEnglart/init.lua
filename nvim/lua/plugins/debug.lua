@@ -87,6 +87,25 @@ return {
     dap.listeners.before.event_exited['dapui_config'] = dapui.close
 
     -- Install golang specific config
-    require('dap-go').setup()
+    local dap_go = require('dap-go')
+
+    dap_go.setup({
+      dap_configurations = {
+        {
+          type = 'go',
+          name = 'Debug Package (with args)',
+          request = 'launch',
+          program = '${workspaceFolder}',
+          args = dap_go.get_arguments,
+        },
+        {
+          type = 'go',
+          name = 'Debug Package (with config.out)',
+          request = 'launch',
+          program = '${workspaceFolder}/config.out',
+          args = dap_go.get_arguments,
+        },
+      },
+    })
   end,
 }
