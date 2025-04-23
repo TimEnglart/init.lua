@@ -21,8 +21,11 @@ return {
     -- Define your formatters
     formatters_by_ft = {
       lua = { 'stylua' },
+      go = { 'golangci-lint', 'goimports', 'gofumpt' },
       python = { 'isort', 'black' },
       javascript = { 'prettierd', 'prettier', stop_after_first = true },
+      nix = { lsp_format = 'fallback' },
+      sh = { 'shfmt' },
     },
     -- Set default options
     default_format_opts = {
@@ -32,9 +35,9 @@ return {
     format_on_save = { timeout_ms = 500 },
     -- Customize formatters
     formatters = {
-      shfmt = {
-        prepend_args = { '-i', '2' },
-      },
+      --shfmt = {
+      --   prepend_args = { '-i', '2' },
+      --},
     },
   },
   init = function()
