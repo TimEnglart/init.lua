@@ -102,8 +102,7 @@ return {
           type = 'go',
           name = 'Debug Package (with config.out)',
           request = 'launch',
-          program = '${workspaceFolder}/config.out',
-          args = dap_go.get_arguments,
+          program = '${workspaceFolder}/.config.out',
         },
       },
     })
