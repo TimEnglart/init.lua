@@ -27,6 +27,7 @@ with lib;
   withRuby ? true, # Build Neovim with Ruby support?
   withNodeJs ? true, # Build Neovim with NodeJS support?
   withSqlite ? true, # Add sqlite? This is a dependency for some plugins
+  withCodeLLDB ? true, # Add codelldb to the PATH for LLVM based debugging
   # You probably don't want to create vi or vim aliases
   # if the appName is something different than "nvim"
   # Add a "vi" binary to the build output as an alias?
@@ -129,6 +130,7 @@ let
       mkdir -p $out/nvim
       mkdir -p $out/lua
       # rm init.lua
+
     '';
 
     installPhase = ''
@@ -218,6 +220,8 @@ let
     ++ (optional withSqlite ''--set LIBSQLITE_CLIB_PATH "${pkgs.sqlite.out}/lib/libsqlite3.so"'')
     # Set the LIBSQLITE environment variable if sqlite is enabled
     ++ (optional withSqlite ''--set LIBSQLITE "${pkgs.sqlite.out}/lib/libsqlite3.so"'')
+    ++ (optional withCodeLLDB ''--prefix PATH : "${pkgs.vscode-extensions.vadimcn.vscode-lldb}/share/vscode/extensions/vadimcn.vscode-lldb/adapter"'')
+
   );
 
   luaPackages = neovim-unwrapped.lua.pkgs;

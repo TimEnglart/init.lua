@@ -107,5 +107,29 @@ return {
         },
       },
     })
+
+    -- Zig dap
+    -- configure codelldb adapter
+    dap.adapters.codelldb = {
+      type = 'server',
+      port = '${port}',
+      executable = {
+        command = 'codelldb',
+        args = { '--port', '${port}' },
+      },
+    }
+
+    -- setup a debugger config for zig projects
+    dap.configurations.zig = {
+      {
+        name = 'Launch',
+        type = 'codelldb',
+        request = 'launch',
+        program = '${workspaceFolder}/zig-out/bin/${workspaceFolderBasename}',
+        cwd = '${workspaceFolder}',
+        stopOnEntry = false,
+        args = {},
+      },
+    }
   end,
 }

@@ -200,6 +200,10 @@ let
     # Zig
     zls
 
+    # Shared
+    vscode-extensions.vadimcn.vscode-lldb
+    lldb
+
     # Requirements for plugins
     # Treesitter
     ripgrep
