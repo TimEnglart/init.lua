@@ -161,6 +161,8 @@ let
     delve
     # GraphQL
     # graphql-language-service-cli
+    # HCL
+    hclfmt
     # HTML
     vscode-langservers-extracted
     # HTMX
@@ -193,6 +195,7 @@ let
     systemd-language-server
     # Terraform
     terraform-lsp
+    terraform
     # YAML
     yaml-language-server
     yamlfmt

@@ -26,6 +26,8 @@ return {
       javascript = { 'prettierd', 'prettier', stop_after_first = true },
       nix = { lsp_format = 'fallback' },
       sh = { 'shfmt' },
+      tf = { 'terraform_fmt' },
+      hcl = { 'hcl' },
     },
     -- Set default options
     default_format_opts = {
