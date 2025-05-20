@@ -74,6 +74,7 @@ let
     nvim-dap
     nvim-dap-ui
     nvim-dap-go
+    persistent-breakpoints-nvim
     fidget-nvim
     lazydev-nvim
     # ^ language support

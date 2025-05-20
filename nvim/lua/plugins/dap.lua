@@ -18,6 +18,10 @@ return {
       dir = require('lazy-nix-helper').get_plugin_path('mason-nvim-dap.nvim'),
       enabled = require('lazy-nix-helper').mason_enabled(),
     },
+    {
+      'Weissle/persistent-breakpoints.nvim',
+      dir = require('lazy-nix-helper').get_plugin_path('persistent-breakpoints.nvim'),
+    },
 
     -- Add your own debuggers here
     { 'leoluz/nvim-dap-go', dir = require('lazy-nix-helper').get_plugin_path('nvim-dap-go') },
@@ -45,6 +49,11 @@ return {
       })
     end
 
+    require('persistent-breakpoints').setup({
+      load_breakpoints_event = { 'BufReadPost' },
+    })
+    local p_breakpoints = require('persistent-breakpoints.api')
+
     -- Basic debugging keymaps, feel free to change to your liking!
     vim.keymap.set('n', '<F5>', dap.continue, { desc = 'Debug: Start/Continue' })
     vim.keymap.set('n', '<F6>', dap.restart, { desc = 'Debug: Restart' })
@@ -52,9 +61,15 @@ return {
     vim.keymap.set('n', '<F1>', dap.step_into, { desc = 'Debug: Step Into' })
     vim.keymap.set('n', '<F2>', dap.step_over, { desc = 'Debug: Step Over' })
     vim.keymap.set('n', '<F3>', dap.step_out, { desc = 'Debug: Step Out' })
-    vim.keymap.set('n', '<leader>b', dap.toggle_breakpoint, { desc = 'Debug: Toggle Breakpoint' })
+    vim.keymap.set('n', '<leader>b', function()
+      dap.toggle_breakpoint()
+      p_breakpoints.toggle_breakpoint()
+    end, { desc = 'Debug: Toggle Breakpoint' })
+
     vim.keymap.set('n', '<leader>B', function()
-      dap.set_breakpoint(vim.fn.input('Breakpoint condition: '))
+      local condition = vim.fn.input('Breakpoint condition: ')
+      dap.set_breakpoint(condition)
+      p_breakpoints.set_conditional_breakpoint(condition)
     end, { desc = 'Debug: Set Breakpoint' })
 
     -- Dap UI setup
@@ -131,5 +146,21 @@ return {
         args = {},
       },
     }
+
+    dap.configurations.c = {
+      {
+        type = 'codelldb',
+        request = 'launch',
+        program = function()
+          return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+        end,
+        --program = '${fileDirname}/${fileBasenameNoExtension}',
+        cwd = '${workspaceFolder}',
+        terminal = 'integrated',
+        name = 'launch c',
+      },
+    }
+
+    dap.configurations.cpp = dap.configurations.c
   end,
 }
