@@ -1,6 +1,10 @@
 return {
   'laytan/cloak.nvim',
   dir = require('lazy-nix-helper').get_plugin_path('cloak.nvim'),
+  init = function()
+    vim.keymap.set('n', '<leader>ct', '<cmd>CloakToggle<cr>')
+    vim.keymap.set('n', '<leader>cp', '<cmd>CloakPreview<cr>')
+  end,
   opts = {
     enabled = true,
     cloak_character = '*',
