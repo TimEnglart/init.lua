@@ -154,7 +154,7 @@ return {
       rust_analyzer = {},
       sqls = {},
       systemd_ls = {},
-      terraform_lsp = {},
+      terraform_ls = {},
       ts_ls = {},
       yamlls = {
         settings = {

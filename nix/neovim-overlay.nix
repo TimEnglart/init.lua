@@ -195,7 +195,7 @@ let
     # Systemd
     systemd-language-server
     # Terraform
-    terraform-lsp
+    terraform-ls
     terraform
     # YAML
     yaml-language-server
