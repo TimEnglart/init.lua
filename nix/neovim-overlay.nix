@@ -129,6 +129,8 @@ let
   extraPackages = with pkgs; [
     # Arduino
     arduino-language-server
+    # Autotools (make)
+    # autotools-language-server
     # Bash
     bash-language-server
     # C
@@ -162,6 +164,8 @@ let
     delve
     # GraphQL
     # graphql-language-service-cli
+    # Harper (Grammar Checker)
+    harper
     # HCL
     hclfmt
     # HTML

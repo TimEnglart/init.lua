@@ -71,7 +71,9 @@ return {
     --  define the property 'filetypes' to the map in question.
     local servers = {
       arduino_language_server = {},
+      autotools_ls = {},
       bashls = {},
+      buf_ls = {},
       clangd = {},
       cmake = {},
       csharp_ls = {},
@@ -130,6 +132,7 @@ return {
         },
       },
       graphql = {},
+      harper = {},
       html = { filetypes = { 'html', 'twig', 'hbs' } },
       htmx = {},
       jinja_lsp = {},
