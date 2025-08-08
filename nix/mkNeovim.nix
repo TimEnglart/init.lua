@@ -224,7 +224,9 @@ let
 
   );
 
-  luaPackages = neovim-unwrapped.lua.pkgs;
+  luaPackages = neovim-unwrapped.lua.pkgs // {
+    inherit (pkgs-wrapNeovim) luajitPackages;
+  };
   resolvedExtraLuaPackages = extraLuaPackages luaPackages;
 
   # Native Lua libraries

@@ -57,6 +57,7 @@ let
     # ^ git integration plugins
     # telescope and extensions
     telescope-nvim # https://github.com/nvim-telescope/telescope.nvim/
+    telescope-ui-select-nvim # https://github.com/nvim-telescope/telescope-ui-select.nvim
     telescope-fzy-native-nvim # https://github.com/nvim-telescope/telescope-fzy-native.nvim
     # telescope-smart-history-nvim # https://github.com/nvim-telescope/telescope-smart-history.nvim
     # ^ telescope and extensions
@@ -130,26 +131,32 @@ let
     # Arduino
     arduino-language-server
     # Autotools (make)
-    # autotools-language-server
+    # autotools-language-server # disabled until it gets updated
     # Bash
     bash-language-server
+    # Protobuf
+    buf
     # C
     llvmPackages_latest.clang
+    llvmPackages_latest.clang-tools
     # Cmake
     cmake-language-server
     # C#
     csharp-ls
+    # CSS
+    vscode-css-languageserver
     # Dart
-    # dart
+    dart
     # Deno
-    # deno
+    deno
     # Docker Compose
     docker-compose-language-service
     # Dockerfile
     dockerfile-language-server-nodejs
     # Elixir
-    # beamMinimal27Packages.elixir-ls
+    beamMinimal27Packages.elixir-ls
     # Erlang
+    beamMinimal27Packages.erlang-ls
     erlang-language-platform
     # Fish
     fish-lsp
@@ -158,12 +165,12 @@ let
     # Gitlab CI
     gitlab-ci-ls
     # Gleam
-    # gleam
+    gleam
     # Golang
     gopls
     delve
     # GraphQL
-    # graphql-language-service-cli
+    graphql-language-service-cli
     # Harper (Grammar Checker)
     harper
     # HCL
@@ -192,6 +199,8 @@ let
     pyright
     # Salt
     # salt-ls
+    # Ruby
+    ruby-lsp
     # Rust
     rust-analyzer
     # SQL
@@ -201,6 +210,8 @@ let
     # Terraform
     terraform-ls
     terraform
+    # Typscript
+    typescript-language-server
     # YAML
     yaml-language-server
     yamlfmt
@@ -217,6 +228,11 @@ let
     ripgrep
     fd
     gcc
+
+    # Copilot Chat
+    curl
+    lynx
+
     # Mason
     # unzip
     # wget
@@ -225,6 +241,12 @@ let
     # gnutar
     # bash
   ];
+
+  extraLuaPackages =
+    luaPkgs: with luaPkgs; [
+      # Copilot Chat - Token counter
+      luajitPackages.tiktoken_core
+    ];
 in
 {
   # This is the neovim derivation
@@ -232,7 +254,7 @@ in
   tnvim = mkNeovim {
     plugins = all-plugins;
     appName = "tnvim";
-    inherit extraPackages;
+    inherit extraPackages extraLuaPackages;
   };
 
   # This can be symlinked in the devShell's shellHook
