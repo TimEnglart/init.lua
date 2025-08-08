@@ -124,11 +124,25 @@ return {
       { 'nvim-lua/plenary.nvim' },
     },
     opts = {
-      question_header = '## User ',
-      answer_header = '## Copilot ',
-      error_header = '## Error ',
+      -- Appearance
+      window = {
+        layout = 'float',
+        width = 80, -- Fixed width in columns
+        height = 20, -- Fixed height in rows
+        border = 'rounded', -- 'single', 'double', 'rounded', 'solid'
+        title = '🤖 AI Assistant',
+        zindex = 100, -- Ensure window stays on top
+      },
+      headers = {
+        user = '👤 You: ',
+        assistant = '🤖 Copilot: ',
+        tool = '🔧 Tool: ',
+      },
+      separator = '━━',
+      show_folds = false, -- Disable folding for cleaner look
+      -- Copilot Interaction
       prompts = prompts,
-      -- model = "claude-3.7-sonnet",
+      -- model = 'GPT-4.1',
       mappings = {
         -- Use tab for completion
         complete = {
@@ -196,6 +210,10 @@ return {
           vim.opt_local.relativenumber = true
           vim.opt_local.number = true
 
+          -- Set Highlights
+          vim.api.nvim_set_hl(0, 'CopilotChatHeader', { fg = '#7C3AED', bold = true })
+          vim.api.nvim_set_hl(0, 'CopilotChatSeparator', { fg = '#374151' })
+
           -- Get current filetype and set it to markdown if the current filetype is copilot-chat
           local ft = vim.bo.filetype
           if ft == 'copilot-chat' then
@@ -231,7 +249,7 @@ return {
       { '<leader>at', '<cmd>CopilotChatTests<cr>', desc = 'CopilotChat - Generate tests' },
       { '<leader>ar', '<cmd>CopilotChatReview<cr>', desc = 'CopilotChat - Review code' },
       { '<leader>aR', '<cmd>CopilotChatRefactor<cr>', desc = 'CopilotChat - Refactor code' },
-      { '<leader>an', '<cmd>CopilotChatBetterNamings<cr>', desc = 'CopilotChat - Better Naming' },
+      { '<leader>an', desc = 'CopilotChat - Better Naming', '<cmd>CopilotChatBetterNamings<cr>' },
       -- Chat with Copilot in visual mode
       {
         '<leader>av',
