@@ -3,10 +3,19 @@ on:
   pull_request:
   push:
 jobs:
-  tests:
+  Build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
+
+    - name: Restore /nix/store Cache
+      id: restore-cache
+      uses: actions/cache/restore@v4
+      with:
+        path: |
+          /nix/store
+        key: ${{ runner.os }}-init.lua
+
     - uses: cachix/install-nix-action@v25
       with:
         nix_path: nixpkgs=channel:nixos-unstable
@@ -15,3 +24,11 @@ jobs:
         name: timenglart-nvim
         authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
     - run: nix build .#
+
+    - name: Save /nix/store Cache
+      id: save-cache
+      uses: actions/cache/save@v4
+      with:
+        path: |
+          /nix/store
+        key: ${{ steps.restore-cache.outputs.cache-primary-key }}
