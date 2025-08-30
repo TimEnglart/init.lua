@@ -206,7 +206,7 @@ let
     # SQL
     sqls
     # Systemd
-    systemd-language-server
+    # systemd-language-server
     # Terraform
     terraform-ls
     terraform
