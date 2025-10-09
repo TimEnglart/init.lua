@@ -1,0 +1,45 @@
+name: update-flake-lock
+on:
+  workflow_dispatch: # allows manual triggering
+  schedule: # run the job at 04:00 every Sunday
+    - cron: "0 4 * * 0"
+jobs:
+  lockfile:
+    permissions:
+      contents: write
+      pull-requests: write
+      checks: read
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@main
+      - name: Update flake.lock
+        uses: DeterminateSystems/update-flake-lock@main
+        id: update
+        with:
+          commit-msg: "flake (lock): bump flake lock"
+          pr-title: "flake (lock): bump flake lock"
+          pr-labels: |
+            dependencies
+            automated
+      - name: Get bumped commit hash
+        id: new_hash
+        run: |
+          git fetch
+          git switch update_flake_lock_action
+          echo "NEW_HEAD=$(git rev-parse HEAD)" >> $GITHUB_ENV
+      - name: Wait for tests to succeed
+        uses: lewagon/wait-on-check-action@v1.4.1
+        with:
+          ref: ${{ env.NEW_HEAD }}
+          check-name: All Garnix checks
+          ignore-checks: lockfile
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - run: |
+          if [ -n "${{ steps.update.outputs.pull-request-number }}" ]; then
+            gh pr merge --auto --rebase ${{ steps.update.outputs.pull-request-number }}
+          fi
+        env:
+          GH_TOKEN: ${{ github.token }}
