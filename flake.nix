@@ -96,12 +96,11 @@
                 tnvim
               ]
               ++ self.checks.${system}.pre-commit-check.enabledPackages;
-            shellHook =
-              ''
-                # symlink the .luarc.json generated in the overlay
-                ln -fs ${pkgs.nvim-luarc-json} .luarc.json
-              ''
-              + self.checks.${system}.pre-commit-check.shellHook;
+            shellHook = ''
+              # symlink the .luarc.json generated in the overlay
+              ln -fs ${pkgs.nvim-luarc-json} .luarc.json
+            ''
+            + self.checks.${system}.pre-commit-check.shellHook;
 
           };
           go = import ./nix/shells/go.nix { pkgs = importPkgs { config.allowUnfree = true; }; };

@@ -156,7 +156,6 @@ let
     # Elixir
     beamMinimal27Packages.elixir-ls
     # Erlang
-    beamMinimal27Packages.erlang-ls
     erlang-language-platform
     # Fish
     fish-lsp
