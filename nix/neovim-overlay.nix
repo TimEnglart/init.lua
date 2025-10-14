@@ -152,7 +152,7 @@ let
     # Docker Compose
     docker-compose-language-service
     # Dockerfile
-    dockerfile-language-server-nodejs
+    dockerfile-language-server
     # Elixir
     beamMinimal27Packages.elixir-ls
     # Erlang
