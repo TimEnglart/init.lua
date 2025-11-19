@@ -78,6 +78,7 @@ let
     persistent-breakpoints-nvim
     fidget-nvim
     lazydev-nvim
+    copilot-lsp
     # ^ language support
     # linting
     nvim-lint
@@ -161,6 +162,7 @@ let
     fish-lsp
     # GitHub Actions
     # gh-actions-language-server
+    gh
     # Gitlab CI
     gitlab-ci-ls
     # Gleam
@@ -181,6 +183,7 @@ let
     # Jinja
     jinja-lsp
     # JSON
+    vscode-json-languageserver
     # vscode-langservers-extracted
     # Kotlin
     kotlin-language-server
@@ -245,6 +248,7 @@ let
     luaPkgs: with luaPkgs; [
       # Copilot Chat - Token counter
       luajitPackages.tiktoken_core
+      luajitPackages.lua-lsp
     ];
 in
 {

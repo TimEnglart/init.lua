@@ -100,8 +100,8 @@ return {
     optional = true,
     opts = {
       spec = {
-        { '<leader>a', group = 'ai' },
-        { '<leader>gm', group = 'Copilot Chat' },
+        -- { '<leader>a', group = 'ai' },
+        -- { '<leader>gm', group = 'Copilot Chat' },
       },
     },
   },
