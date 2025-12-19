@@ -14,6 +14,27 @@ let
       version = src.lastModifiedDate;
     };
 
+  selfPackagedPlugins = [
+    {
+      pname = "nvim-dev-container";
+      version = "59d85de531912c3def3061ae1d84c769e09a5653";
+      src = pkgs.fetchFromGitHub {
+        owner = "esensar";
+        repo = "nvim-dev-container";
+        rev = "59d85de531912c3def3061ae1d84c769e09a5653";
+        sha256 = "N2m4AxjvcBlnkkfujdoHx/QJpoA/BYOg/DWY7X8TQgI=";
+      };
+      meta.homepage = "https://github.com/esensar/nvim-dev-container";
+      meta.hydraPlatforms = [ ];
+    }
+  ];
+
+  selfPackagedPluginPkgs = builtins.foldl' (
+    acc: plugin: acc // { ${plugin.pname} = pkgs.vimUtils.buildVimPlugin plugin; }
+  ) { } selfPackagedPlugins;
+
+  bundledVimPlugins = pkgs.vimPlugins // selfPackagedPluginPkgs;
+
   # Make sure we use the pinned nixpkgs instance for wrapNeovimUnstable,
   # otherwise it could have an incompatible signature when applying this overlay.
   pkgs-wrapNeovim = inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
@@ -29,7 +50,8 @@ let
   #   optional = <true|false>; # Default: false
   #   ...
   # }
-  all-plugins = with pkgs.vimPlugins; [
+  all-plugins = with bundledVimPlugins; [
+    nvim-dev-container
     # plugins from nixpkgs go in here.
     # https://search.nixos.org/packages?channel=unstable&from=0&size=50&sort=relevance&type=packages&query=vimPlugins
     # nvim-treesitter
@@ -250,6 +272,7 @@ let
       luajitPackages.tiktoken_core
       luajitPackages.lua-lsp
     ];
+
 in
 {
   # This is the neovim derivation
