@@ -216,7 +216,7 @@ let
     markdown-oxide
     # Nix
     nil # nix LSP
-    nixfmt-rfc-style
+    nixfmt
     # Nomad
     # nomad-lsp
     # Python

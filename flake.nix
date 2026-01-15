@@ -91,7 +91,7 @@
                 # Tools for Lua and Nix development, useful for editing files in this repo
                 lua-language-server
                 nil
-                nixfmt-rfc-style
+                nixfmt
                 stylua
                 luajitPackages.luacheck
                 tnvim
@@ -104,7 +104,6 @@
             + self.checks.${system}.pre-commit-check.shellHook;
 
           };
-          go = import ./nix/shells/go.nix { pkgs = importPkgs { config.allowUnfree = true; }; };
         };
         formatter = treefmtEval.config.build.wrapper;
 
@@ -113,7 +112,7 @@
             src = ./.;
             hooks = {
               # Nix
-              nixfmt-rfc-style.enable = true;
+              nixfmt.enable = true;
               flake-checker.enable = true;
               statix.enable = true;
               deadnix.enable = true;
