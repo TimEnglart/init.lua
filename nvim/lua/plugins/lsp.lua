@@ -156,7 +156,7 @@ return {
       salt_ls = {},
       rust_analyzer = {},
       sqls = {},
-      systemd_ls = {},
+      systemd_lsp = {},
       terraform_ls = {},
       ts_ls = {},
       yamlls = {

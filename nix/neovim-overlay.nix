@@ -230,7 +230,7 @@ let
     # SQL
     sqls
     # Systemd
-    # systemd-language-server
+    systemd-lsp
     # Terraform
     terraform-ls
     terraform
