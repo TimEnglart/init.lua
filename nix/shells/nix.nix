@@ -17,7 +17,7 @@ let
       ]
       ++ nativeBuildInputs;
 
-    shellHook = '''';
+    shellHook = "";
 
     inherit buildInputs;
   };
