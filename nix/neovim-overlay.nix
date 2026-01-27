@@ -143,6 +143,7 @@ let
     comment-nvim
     harpoon2
     render-markdown-nvim
+    persistence-nvim
     # Theme
     rose-pine
     onedark-nvim
