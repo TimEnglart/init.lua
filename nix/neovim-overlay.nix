@@ -144,6 +144,7 @@ let
     harpoon2
     render-markdown-nvim
     persistence-nvim
+    nvim-remote-containers
     # Theme
     rose-pine
     onedark-nvim
