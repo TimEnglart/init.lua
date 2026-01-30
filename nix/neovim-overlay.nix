@@ -17,12 +17,12 @@ let
   selfPackagedPlugins = [
     {
       pname = "nvim-dev-container";
-      version = "59d85de531912c3def3061ae1d84c769e09a5653";
+      version = "c3d9681380cb69e81b81509851a07f12daa0000c";
       src = pkgs.fetchFromGitHub {
         owner = "esensar";
         repo = "nvim-dev-container";
-        rev = "59d85de531912c3def3061ae1d84c769e09a5653";
-        sha256 = "N2m4AxjvcBlnkkfujdoHx/QJpoA/BYOg/DWY7X8TQgI=";
+        rev = "c3d9681380cb69e81b81509851a07f12daa0000c";
+        sha256 = "sha256-WwfUyaSReKLu6wD6U7N5GoCs6UkN4ppvQ1FHTU4ocjw=";
       };
       meta.homepage = "https://github.com/esensar/nvim-dev-container";
       meta.hydraPlatforms = [ ];
