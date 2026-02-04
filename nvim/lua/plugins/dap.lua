@@ -112,6 +112,8 @@ return {
           request = 'launch',
           program = '${workspaceFolder}',
           args = dap_go.get_arguments,
+          buildFlags = '',
+          outputMode = 'remote',
         },
         {
           type = 'go',
@@ -119,6 +121,8 @@ return {
           request = 'launch',
           program = '${workspaceFolder}',
           args = { '-config=${workspaceFolder}/.config.out' },
+          buildFlags = '',
+          outputMode = 'remote',
         },
       },
     })
