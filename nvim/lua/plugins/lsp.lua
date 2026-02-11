@@ -76,7 +76,8 @@ return {
       buf_ls = {},
       clangd = {},
       cmake = {},
-      csharp_ls = {},
+      -- csharp_ls = {},
+      roslyn_ls = {},
       css_variables = {},
       cssmodules_ls = {},
       dartls = {

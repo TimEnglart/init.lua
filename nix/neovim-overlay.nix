@@ -170,7 +170,8 @@ let
     # Cmake
     cmake-language-server
     # C#
-    csharp-ls
+    # csharp-ls
+    roslyn-ls
     # CSS
     vscode-css-languageserver
     # Dart
