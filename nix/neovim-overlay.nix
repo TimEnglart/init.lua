@@ -5,6 +5,9 @@ with final.pkgs.lib;
 let
   pkgs = final;
 
+  # pkgsStable = inputs.nixpkgs-stable.legacyPackages.${pkgs.stdenv.hostPlatform.system};
+  pkgsMaster = inputs.nixpkgs-master.legacyPackages.${pkgs.stdenv.hostPlatform.system};
+
   # Use this to create a plugin from a flake input
   # deadnix: skip
   mkNvimPlugin =
@@ -243,7 +246,7 @@ let
     yamlfmt
     yq-go
     # Zig
-    zls
+    pkgsMaster.zls
 
     # Shared
     vscode-extensions.vadimcn.vscode-lldb

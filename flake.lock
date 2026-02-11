@@ -200,6 +200,22 @@
         "url": "https://github.com/NixOS/nixpkgs/archive/eb9ceca17df2ea50a250b6b27f7bf6ab0186f198.tar.gz"
       }
     },
+    "nixpkgs-master": {
+      "locked": {
+        "lastModified": 1770768863,
+        "narHash": "sha256-25FntoUoRG1wYt7XkyjRVWk8CIXSErTYJKpfU5R6Gi8=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "dcb331fe95d903edf906a0970f82e517462a8818",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "master",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs-stable": {
       "locked": {
         "lastModified": 1720386169,
@@ -212,6 +228,22 @@
       "original": {
         "owner": "NixOS",
         "ref": "nixos-24.05",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs-stable_2": {
+      "locked": {
+        "lastModified": 1770562336,
+        "narHash": "sha256-ub1gpAONMFsT/GU2hV6ZWJjur8rJ6kKxdm9IlCT0j84=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "d6c71932130818840fc8fe9509cf50be8c64634f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -241,11 +273,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1769939035,
-        "narHash": "sha256-Fok2AmefgVA0+eprw2NDwqKkPGEI5wvR+twiZagBvrg=",
+        "lastModified": 1770726378,
+        "narHash": "sha256-kck+vIbGOaM/dHea7aTBxdFYpeUl/jHOy5W3eyRvVx8=",
         "owner": "cachix",
         "repo": "git-hooks.nix",
-        "rev": "a8ca480175326551d6c4121498316261cbb5b260",
+        "rev": "5eaaedde414f6eb1aea8b8525c466dc37bba95ae",
         "type": "github"
       },
       "original": {
@@ -259,6 +291,8 @@
         "flake-utils": "flake-utils",
         "gen-luarc": "gen-luarc",
         "nixpkgs": "nixpkgs_2",
+        "nixpkgs-master": "nixpkgs-master",
+        "nixpkgs-stable": "nixpkgs-stable_2",
         "pre-commit-hooks": "pre-commit-hooks",
         "treefmt-nix": "treefmt-nix"
       }
