@@ -31,6 +31,15 @@ autocmd({ 'BufWritePre' }, {
   command = [[%s/\s\+$//e]],
 })
 
+autocmd({ 'InsertLeave', 'TextChanged', 'TextChangedP' }, {
+  pattern = '*',
+  callback = function()
+    if vim.bo.modifiable and not vim.bo.readonly then
+      vim.cmd('silent! update')
+    end
+  end,
+})
+
 vim.g.netrw_browse_split = 0
 vim.g.netrw_banner = 0
 vim.g.netrw_winsize = 25
