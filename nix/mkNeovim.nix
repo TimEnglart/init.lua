@@ -44,7 +44,7 @@ let
     # set to `true`, it is installed in the 'opt' packpath, and can be lazy loaded with
     # ':packadd! {plugin-name}
     optional = false;
-    runtime = { };
+    # runtime = { };
   };
 
   extendedPlugins = plugins;
