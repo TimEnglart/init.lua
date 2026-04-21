@@ -5,7 +5,7 @@ with final.pkgs.lib;
 let
   pkgs = final;
 
-  # pkgsStable = inputs.nixpkgs-stable.legacyPackages.${pkgs.stdenv.hostPlatform.system};
+  pkgsStable = inputs.nixpkgs-stable.legacyPackages.${pkgs.stdenv.hostPlatform.system};
   pkgsMaster = inputs.nixpkgs-master.legacyPackages.${pkgs.stdenv.hostPlatform.system};
 
   # Use this to create a plugin from a flake input
@@ -171,7 +171,7 @@ let
     cmake-language-server
     # C#
     # csharp-ls
-    roslyn-ls
+    pkgsStable.roslyn-ls
     # CSS
     vscode-css-languageserver
     # Dart
