@@ -194,7 +194,7 @@ let
     # Gitlab CI
     gitlab-ci-ls
     # Gleam
-    gleam
+    pkgsMaster.gleam
     # Golang
     gopls
     delve
@@ -247,7 +247,7 @@ let
     yamlfmt
     yq-go
     # Zig
-    pkgsMaster.zls
+    zls
 
     # Shared
     vscode-extensions.vadimcn.vscode-lldb
