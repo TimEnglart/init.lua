@@ -67,6 +67,10 @@ jobs:
       pull-requests: write
       checks: read
     steps:
+      - name: Checkout Pending PR
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ needs.lockfile.outputs.rev }}
       - name: Merge Sucessful PR Build
         run: |
           if [ -n "${{ needs.lockfile.outputs.pull-request-number }}" ]; then
