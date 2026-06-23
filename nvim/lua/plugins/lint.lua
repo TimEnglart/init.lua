@@ -20,10 +20,11 @@ return {
     -- Define the table for available linters
     lint.linters_by_ft = {}
 
-    for ft, linterList in ipairs(lintersForFt) do
+    for ft, linterList in pairs(lintersForFt) do
+      lint.linters_by_ft[ft] = {}
       for _, linter in ipairs(linterList) do
-        if vim.fn.executable(lint.linters[linter].cmd()) == 1 then
-          table.insert(lintersForFt[ft], linter)
+        if vim.fn.executable(lint.linters[linter].cmd) == 1 then
+          table.insert(lint.linters_by_ft[ft], linter)
         end
       end
     end
