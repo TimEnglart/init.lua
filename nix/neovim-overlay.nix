@@ -148,6 +148,9 @@ let
     render-markdown-nvim
     persistence-nvim
     nvim-remote-containers
+    noice-nvim
+    nui-nvim
+    nvim-notify
     # Theme
     rose-pine
     onedark-nvim
