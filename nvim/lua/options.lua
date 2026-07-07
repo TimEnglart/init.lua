@@ -43,3 +43,8 @@ vim.o.breakindent = true
 vim.o.ignorecase = true
 vim.o.smartcase = true
 vim.o.completeopt = 'menuone,noselect'
+
+-- Spell Checking
+vim.opt.spell = true
+vim.opt.spelllang = { 'en_au' }
+vim.opt.spelloptions:append('camel')
